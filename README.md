@@ -1,180 +1,481 @@
-# VeilShot
+# 🛡️ VeilShot — Privacy-First Screenshot Editor
 
-**VeilShot** is a privacy-first screenshot cleaner for blurring, pixelating, and permanently redacting sensitive information before sharing an image.
+<div align="center">
 
-All image processing happens locally in the browser. VeilShot does not upload screenshots to an application server, store images in a database, or require an account.
+![Next.js](https://img.shields.io/badge/Next.js-Black?style=for-the-badge\&logo=next.js)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge\&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge\&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge\&logo=tailwindcss)
+![Privacy](https://img.shields.io/badge/Processing-100%25_Local-16A34A?style=for-the-badge)
 
-## Features
+### Protect sensitive information before sharing screenshots.
 
-- PNG, JPG, and WebP upload with drag-and-drop support
-- Strict file-size, format, and image-dimension validation
-- Blur, pixelation, and solid redaction tools
-- Multiple editable privacy regions
-- Select, move, resize, restyle, and delete individual regions
-- Adjustable blur strength and pixel size
-- Undo and redo history
-- Keyboard shortcuts
-- Zoom and fit-to-workspace controls
-- Original-versus-protected preview
-- Full-resolution PNG and JPG export
-- JPEG quality control
-- Copy protected output to the clipboard
-- Responsive editor layout
-- Local-only processing with no backend or paid API
+VeilShot is a privacy-first screenshot editor that allows users to blur, pixelate, and permanently redact sensitive information directly inside the browser.
 
-## Technology
+All image processing happens locally on the user's device. Images are never uploaded to a backend server or stored in a cloud database.
 
-- Next.js App Router
-- React 19
-- TypeScript
-- Tailwind CSS
-- React Konva and Konva.js
-- Browser Canvas, File, Blob, Object URL, and Clipboard APIs
-- Sonner notifications
-- Lucide icons
+[GitHub Repository](https://github.com/shahid-shaikh-001/VeilShot) · **Live Demo: Coming Soon**
 
-## Architecture
+</div>
+
+---
+
+## ✨ Features
+
+### 🔒 Privacy Protection Tools
+
+* Blur sensitive information
+* Pixelate selected areas
+* Apply permanent solid redaction
+* Create multiple privacy regions
+* Move and resize selected regions
+* Delete individual privacy regions
+* Adjust blur strength and pixelation size
+
+### 🖼️ Screenshot Editing
+
+* Upload PNG, JPG, JPEG, and WebP images
+* Drag-and-drop image upload
+* Interactive screenshot editing canvas
+* Zoom in and zoom out
+* Fit image to workspace
+* Select and modify existing regions
+* Compare original and protected screenshots
+
+### ↩️ Editing Controls
+
+* Undo previous actions
+* Redo reverted actions
+* Delete selected regions
+* Reset the editor
+* Keyboard shortcuts for faster editing
+* Responsive editing workspace
+
+### 📤 Export Options
+
+* Export screenshots in PNG format
+* Export screenshots in JPG format
+* Control JPG image quality
+* Preserve the original image resolution
+* Copy protected images to the clipboard
+* Download the final edited screenshot
+
+### 🛡️ Privacy-First Architecture
+
+* No backend image processing
+* No image upload API
+* No cloud storage
+* No database
+* No user account required
+* No paid image-processing API
+* No permanent screenshot storage
+
+---
+
+## 🔐 Privacy Model
+
+VeilShot processes screenshots entirely inside the browser.
+
+During an editing session, the application temporarily stores:
+
+* The selected image file
+* A temporary browser object URL
+* Decoded image pixels
+* Privacy-region coordinates
+* Editing history
+* The generated export image
+
+The temporary data is removed when the user replaces the image, resets the editor, closes the page, or ends the browser session.
+
+> For highly sensitive information, permanent solid redaction is recommended. Blur and pixelation can sometimes preserve contextual visual information.
+
+---
+
+## 🛠️ Technology Stack
+
+### Frontend
+
+* Next.js
+* React.js
+* TypeScript
+* Tailwind CSS
+
+### Image Editing
+
+* React Konva
+* Konva.js
+* Browser Canvas API
+* File API
+* Blob API
+* Object URL API
+* Clipboard API
+
+### UI and Utilities
+
+* Lucide React
+* Sonner
+* Custom React Hooks
+* Context API
+
+### Development Tools
+
+* ESLint
+* Prettier
+* TypeScript Compiler
+* npm
+
+---
+
+## 🏗️ System Architecture
 
 ```text
-Browser
-├── Next.js application shell
-├── Editor state and history
-├── React Konva interaction layer
-│   ├── Base image
-│   ├── Privacy regions
-│   └── Selection transformer
-├── Full-resolution Canvas export pipeline
-└── Browser APIs
-    ├── File API
-    ├── Object URL API
-    ├── Canvas API
-    ├── Blob API
-    └── Clipboard API
+User Browser
+│
+├── Next.js Application
+│
+├── Screenshot Upload Layer
+│   ├── File Validation
+│   ├── File API
+│   └── Object URL Generation
+│
+├── Screenshot Editor
+│   ├── React Konva Canvas
+│   ├── Image Rendering
+│   ├── Privacy Regions
+│   ├── Region Selection
+│   └── Resize and Move Controls
+│
+├── Editor State
+│   ├── Active Tool
+│   ├── Selected Region
+│   ├── Undo History
+│   ├── Redo History
+│   └── Zoom State
+│
+└── Export Pipeline
+    ├── Offscreen Canvas
+    ├── Full-Resolution Rendering
+    ├── PNG/JPG Generation
+    ├── Clipboard Copy
+    └── File Download
 ```
 
-The visible Konva canvas is used for interaction. Exporting uses a separate offscreen canvas at the original image dimensions, so the downloaded output does not depend on the browser viewport or current zoom level.
+VeilShot separates interactive editing from final image export.
 
-## Privacy model
+The visible React Konva canvas handles user interaction, selection, movement, resizing, and previewing. A separate offscreen browser canvas renders the final protected screenshot at the original image resolution.
 
-VeilShot does not include:
+---
 
-- Image-upload API routes
-- Server-side image processing
-- Cloud image storage
-- User accounts
-- A database
-- Image-content analytics
-- Paid AI or OCR APIs
+## 🔄 How It Works
 
-While editing, the browser temporarily holds the selected file, an object URL, decoded pixels, annotation coordinates, and an export Blob. Object URLs are revoked when the image is removed, replaced, or the editor unmounts.
+1. The user uploads or drags a screenshot into the application.
+2. VeilShot validates the file type, size, and image dimensions.
+3. The browser decodes and displays the image locally.
+4. The user selects blur, pixelation, or redaction.
+5. The user draws a privacy region over sensitive information.
+6. The region can be moved, resized, modified, or deleted.
+7. Every change is stored in the editing history.
+8. The preview feature displays the protected output.
+9. An offscreen canvas renders the final image at full resolution.
+10. The user downloads or copies the protected screenshot.
 
-Solid redaction is the recommended mode for highly sensitive data. Blur and pixelation can preserve contextual clues, so users should inspect the final preview before sharing.
+---
 
-## Supported files
+## 📁 Supported Image Formats
 
-| Requirement        |               Limit |
-| ------------------ | ------------------: |
-| Formats            | PNG, JPG/JPEG, WebP |
-| Maximum file size  |               15 MB |
-| Maximum dimensions |  12,000 × 12,000 px |
+| Requirement         | Supported Value      |
+| ------------------- | -------------------- |
+| Image formats       | PNG, JPG, JPEG, WebP |
+| Processing location | User's browser       |
+| Server upload       | Not required         |
+| Database storage    | Not used             |
+| Export formats      | PNG and JPG          |
 
-SVG and animated GIF files are intentionally excluded from the current release.
+SVG and animated GIF files are not supported in the current version.
 
-## Keyboard shortcuts
+---
 
-| Action                 | Shortcut                                 |
-| ---------------------- | ---------------------------------------- |
-| Select                 | `V`                                      |
-| Blur                   | `B`                                      |
-| Pixelate               | `P`                                      |
-| Redact                 | `R`                                      |
-| Undo                   | `Ctrl/Cmd + Z`                           |
-| Redo                   | `Ctrl/Cmd + Shift + Z` or `Ctrl/Cmd + Y` |
-| Delete selected region | `Delete` / `Backspace`                   |
-| Deselect               | `Escape`                                 |
-| Fit image              | `0`                                      |
-| Zoom in                | `+`                                      |
-| Zoom out               | `-`                                      |
+## ⌨️ Keyboard Shortcuts
 
-## Local development
+| Action                 | Shortcut                |
+| ---------------------- | ----------------------- |
+| Select tool            | `V`                     |
+| Blur tool              | `B`                     |
+| Pixelate tool          | `P`                     |
+| Redact tool            | `R`                     |
+| Undo                   | `Ctrl/Cmd + Z`          |
+| Redo                   | `Ctrl/Cmd + Shift + Z`  |
+| Delete selected region | `Delete` or `Backspace` |
+| Deselect region        | `Escape`                |
+| Fit image              | `0`                     |
+| Zoom in                | `+`                     |
+| Zoom out               | `-`                     |
 
-### Requirements
+---
 
-- Node.js 20 or newer
-- npm
+## 📂 Project Structure
 
-### Installation
+```text
+VeilShot/
+│
+├── public/
+│   ├── screenshots/
+│   └── assets/
+│
+├── src/
+│   ├── app/
+│   │   ├── about/
+│   │   ├── editor/
+│   │   ├── privacy/
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   │
+│   ├── components/
+│   │   └── editor/
+│   │       ├── AnnotationLayer.tsx
+│   │       ├── EditorCanvas.tsx
+│   │       ├── EditorSidebar.tsx
+│   │       ├── EditorToolbar.tsx
+│   │       ├── ExportDialog.tsx
+│   │       ├── ImageUploader.tsx
+│   │       ├── PreviewDialog.tsx
+│   │       └── PrivacyScanDialog.tsx
+│   │
+│   ├── features/
+│   │   ├── export/
+│   │   └── image-processing/
+│   │
+│   ├── hooks/
+│   │   └── useEditorShortcuts.ts
+│   │
+│   ├── lib/
+│   │
+│   ├── providers/
+│   │   └── EditorProvider.tsx
+│   │
+│   └── types/
+│       └── editor.ts
+│
+├── package.json
+├── tsconfig.json
+├── next.config.ts
+└── README.md
+```
+
+---
+
+## 🚀 Installation and Setup
+
+### Prerequisites
+
+Make sure the following are installed:
+
+* Node.js
+* npm
+* Git
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/shahid-shaikh-001/VeilShot.git
+cd VeilShot
+```
+
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### Start development
+### 3. Start the Development Server
 
 ```bash
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open the application:
 
-### Validation
+```text
+http://localhost:3000
+```
+
+The current version does not require environment variables because image processing happens entirely inside the browser.
+
+---
+
+## ✅ Development Commands
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Run ESLint:
+
+```bash
+npm run lint
+```
+
+Run TypeScript validation:
 
 ```bash
 npm run typecheck
-npm run lint
-npm run build
-npm run format:check
 ```
 
-## Project structure
+Create a production build:
+
+```bash
+npm run build
+```
+
+Start the production server:
+
+```bash
+npm run start
+```
+
+Format the codebase:
+
+```bash
+npm run format
+```
+
+---
+
+## ☁️ Deployment
+
+VeilShot can be deployed directly using Vercel.
+
+### Deployment Steps
+
+1. Push the source code to GitHub.
+2. Sign in to Vercel.
+3. Import the VeilShot repository.
+4. Select Next.js as the framework.
+5. Keep the default build configuration.
+6. Deploy the application.
+
+Because VeilShot does not require a backend, database, or private API keys, the deployment process is lightweight.
+
+---
+
+## 📸 Screenshots
+
+Create this folder inside the project:
 
 ```text
-src/
-├── app/
-│   ├── about/
-│   ├── editor/
-│   ├── privacy/
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/editor/
-│   ├── AnnotationLayer.tsx
-│   ├── EditorCanvas.tsx
-│   ├── EditorSidebar.tsx
-│   ├── EditorToolbar.tsx
-│   ├── ExportDialog.tsx
-│   ├── ImageUploader.tsx
-│   └── PreviewDialog.tsx
-├── features/
-│   ├── export/export-image.ts
-│   └── image-processing/validate-image.ts
-├── hooks/useEditorShortcuts.ts
-├── lib/
-├── providers/EditorProvider.tsx
-└── types/editor.ts
+public/screenshots/
 ```
 
-## Deployment
+Add screenshots using names such as:
 
-VeilShot is designed for the Vercel Hobby plan.
+```text
+public/screenshots/home.png
+public/screenshots/editor.png
+public/screenshots/blur-tool.png
+public/screenshots/preview.png
+public/screenshots/export.png
+```
 
-1. Push the repository to GitHub.
-2. Import the repository into Vercel.
-3. Keep the default Next.js framework settings.
-4. Deploy without private environment variables.
+Then display them in the README:
 
-The application is statically rendered except for the browser-only interactive editor.
+### Home Page
 
-## Assignment requirement
+<img src="./public/screenshots/home.png" alt="VeilShot Home Page" width="100%" />
 
-The website includes a button labelled exactly **Built for Digital Heroes**, linked to `https://digitalheroesco.com`, along with the developer's visible name and contact email.
+### Screenshot Editor
 
-## Author
+<img src="./public/screenshots/editor.png" alt="VeilShot Screenshot Editor" width="100%" />
 
-**Shahid Shaikh**  
-`shahidsocials.007@gmail.com`
+### Privacy Protection Tools
 
-## License
+<img src="./public/screenshots/blur-tool.png" alt="VeilShot Privacy Protection Tools" width="100%" />
 
-This project is currently provided as a portfolio and technical-assignment project. Add a formal license before wider redistribution.
-# VeilShot
+### Protected Image Preview
+
+<img src="./public/screenshots/preview.png" alt="VeilShot Protected Image Preview" width="100%" />
+
+### Export Options
+
+<img src="./public/screenshots/export.png" alt="VeilShot Export Options" width="100%" />
+
+---
+
+## 📈 Project Highlights
+
+* Privacy-first screenshot editing
+* Completely browser-based image processing
+* Blur, pixelation, and permanent redaction tools
+* Multiple editable privacy regions
+* Undo and redo history management
+* Original-resolution image export
+* PNG and JPG export support
+* Clipboard image copying
+* Responsive editing interface
+* No backend or database dependency
+* No user authentication requirement
+* No cloud image storage
+* Production-oriented Next.js architecture
+
+---
+
+## 🎯 Use Cases
+
+VeilShot can be used to protect sensitive information in:
+
+* Application screenshots
+* Email screenshots
+* Payment screenshots
+* Account dashboards
+* Personal conversations
+* API keys and tokens
+* Phone numbers
+* Email addresses
+* Usernames
+* Internal company information
+* Medical or financial screenshots
+* Bug reports and technical documentation
+
+---
+
+## 🗺️ Future Improvements
+
+* Automatic text detection
+* Automatic face detection
+* AI-assisted privacy scanning
+* Batch screenshot processing
+* Reusable redaction presets
+* Additional redaction styles
+* Local project persistence
+* Progressive Web App support
+* Offline editing
+* Additional export formats
+* Accessibility improvements
+* Automated testing coverage
+* Browser extension support
+
+---
+
+## 👨‍💻 Author
+
+### Shahid Shaikh
+
+* GitHub: [shahid-shaikh-001](https://github.com/shahid-shaikh-001)
+* Repository: [VeilShot](https://github.com/shahid-shaikh-001/VeilShot)
+* Email: [shahidshaikhofficial.7@gmail.com](mailto:shahidshaikhofficial.7@gmail.com)
+
+---
+
+## ⭐ Support
+
+If you found VeilShot useful, consider giving the repository a star.
+
+---
+
+## 📜 License
+
+This project is currently maintained as a portfolio and technical-assignment project.
+
+Add a formal open-source license before allowing external redistribution or commercial reuse.
