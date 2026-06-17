@@ -464,6 +464,7 @@ VeilShot can be used to protect sensitive information in:
 
 * GitHub: [shahid-shaikh-001](https://github.com/shahid-shaikh-001)
 * Repository: [VeilShot](https://github.com/shahid-shaikh-001/VeilShot)
+* Live Server: [VeilShot](https://veil-shot.vercel.app/)
 * Email: [shahidshaikhofficial.7@gmail.com](mailto:shahidshaikhofficial.7@gmail.com)
 
 ---
