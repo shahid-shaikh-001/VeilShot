@@ -1,0 +1,300 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+:root {
+  --background: #08080a;
+  --foreground: #f5f5f7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgb(124 58 237 / 45%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* Homepage background grid */
+
+.home-grid {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.025) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to bottom, black, transparent 82%);
+}
+
+/* Editor preview grid */
+
+.editor-grid {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.03) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Hero entry animation */
+
+.reveal-up {
+  animation: reveal-up 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reveal-delay-1 {
+  animation-delay: 140ms;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Background orb movement */
+
+.hero-orb {
+  will-change: transform;
+}
+
+.hero-orb-one {
+  animation: orb-one 14s ease-in-out infinite alternate;
+}
+
+.hero-orb-two {
+  animation: orb-two 18s ease-in-out infinite alternate;
+}
+
+@keyframes orb-one {
+  from {
+    transform: translate3d(-4%, -3%, 0) scale(0.94);
+  }
+
+  to {
+    transform: translate3d(12%, 10%, 0) scale(1.08);
+  }
+}
+
+@keyframes orb-two {
+  from {
+    transform: translate3d(2%, 6%, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(-14%, -8%, 0) scale(1.12);
+  }
+}
+
+/* Floating status cards */
+
+.float-card {
+  will-change: transform;
+}
+
+.float-card-left {
+  animation: float-left 5.5s ease-in-out infinite;
+}
+
+.float-card-right {
+  animation: float-right 6.5s ease-in-out infinite;
+}
+
+@keyframes float-left {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-1deg);
+  }
+
+  50% {
+    transform: translate3d(0, -10px, 0) rotate(1deg);
+  }
+}
+
+@keyframes float-right {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(1deg);
+  }
+
+  50% {
+    transform: translate3d(0, 11px, 0) rotate(-1deg);
+  }
+}
+
+/* Animated editor elements */
+
+.redaction-float {
+  animation: redaction-float 4.8s ease-in-out infinite;
+}
+
+@keyframes redaction-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-5px, 4px, 0);
+  }
+}
+
+.scan-line {
+  animation: editor-scan 5s ease-in-out infinite;
+}
+
+@keyframes editor-scan {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(365px);
+    opacity: 0;
+  }
+}
+
+.pixel-strip {
+  background-image: linear-gradient(
+    90deg,
+    rgb(34 34 34) 0 12.5%,
+    rgb(78 78 78) 12.5% 25%,
+    rgb(45 45 45) 25% 37.5%,
+    rgb(97 97 97) 37.5% 50%,
+    rgb(52 52 52) 50% 62.5%,
+    rgb(22 22 22) 62.5% 75%,
+    rgb(89 89 89) 75% 87.5%,
+    rgb(43 43 43) 87.5% 100%
+  );
+  background-size: 64px 100%;
+  image-rendering: pixelated;
+  animation: pixel-shift 7s steps(8) infinite;
+}
+
+@keyframes pixel-shift {
+  from {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: 64px;
+  }
+}
+
+/* Moving use-case strip */
+
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 28s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Respect system accessibility preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up,
+  .hero-orb-one,
+  .hero-orb-two,
+  .float-card-left,
+  .float-card-right,
+  .redaction-float,
+  .scan-line,
+  .pixel-strip,
+  .marquee-track {
+    animation: none !important;
+  }
+}
