@@ -14,7 +14,7 @@ VeilShot is a privacy-first screenshot editor that allows users to blur, pixelat
 
 All image processing happens locally on the user's device. Images are never uploaded to a backend server or stored in a cloud database.
 
-[GitHub Repository](https://github.com/shahid-shaikh-001/VeilShot) · **Live Demo: Coming Soon**
+[GitHub Repository](https://github.com/shahid-shaikh-001/VeilShot) 
 
 </div>
 
